@@ -13,6 +13,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 class Departments(models.Model):
+    dept_idx = models.IntegerField(primary_key=True)
     dept_no = models.CharField(unique=True, max_length=4)
     dept_name = models.CharField(unique=True, max_length=40)
     class Meta:

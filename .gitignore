@@ -2,9 +2,11 @@
 *.dump
 *.sqlite3
 *.db
+*.swp
 
 # Python specific
 *.py[cod]
+.ipynb_checkpoints
 
 # C extensions
 *.so
