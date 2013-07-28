@@ -13,27 +13,39 @@ from __future__ import unicode_literals
 from django.db import models
 
 class Departments(models.Model):
-    dept_idx = models.IntegerField(primary_key=True)
-    dept_no = models.CharField(unique=True, max_length=4)
-    dept_name = models.CharField(unique=True, max_length=40)
+    dept_idx    = models.IntegerField(primary_key=True)
+    dept_no     = models.CharField(unique=True, max_length=4)
+    dept_name   = models.CharField(unique=True, max_length=40)
+
+    def __unicode__(self):
+        return self.dept_name
+
     class Meta:
         managed = False
         db_table = 'departments'
 
 class DeptEmp(models.Model):
-    emp_no = models.IntegerField(primary_key=True)
-    dept_no = models.CharField(primary_key=True, max_length=4)
-    from_date = models.DateField()
-    to_date = models.DateField()
+    emp_no      = models.IntegerField(primary_key=True)
+    dept_no     = models.CharField(primary_key=True, max_length=4)
+    from_date   = models.DateField()
+    to_date     = models.DateField()
+
+    def __unicode__(self):
+        return "%d/%s" % (self.dept_no, self.emp_no)
+
     class Meta:
         managed = False
         db_table = 'dept_emp'
 
 class DeptManager(models.Model):
-    dept_no = models.CharField(primary_key=True, max_length=4)
-    emp_no = models.IntegerField(primary_key=True)
-    from_date = models.DateField()
-    to_date = models.DateField()
+    dept_no     = models.CharField(primary_key=True, max_length=4)
+    emp_no      = models.IntegerField(primary_key=True)
+    from_date   = models.DateField()
+    to_date     = models.DateField()
+
+    def __unicode__(self):
+        return "%d/%s" % (self.dept_no, self.emp_no)
+
     class Meta:
         managed = False
         db_table = 'dept_manager'
@@ -45,15 +57,23 @@ class Employees(models.Model):
     last_name = models.CharField(max_length=16)
     gender = models.CharField(max_length=1)
     hire_date = models.DateField()
+
+    def __unicode__(self):
+        return "%s, %s - %d" % (self.last_name, self.first_name, self.emp_no)
+
     class Meta:
         managed = False
         db_table = 'employees'
 
 class Salaries(models.Model):
-    emp_no = models.IntegerField(primary_key=True)
-    salary = models.IntegerField()
-    from_date = models.DateField(primary_key=True)
-    to_date = models.DateField()
+    emp_no      = models.IntegerField(primary_key=True)
+    salary      = models.IntegerField()
+    from_date   = models.DateField(primary_key=True)
+    to_date     = models.DateField()
+
+    def __unicode__(self):
+        return "%d %d" % (self.salary, self.emp_no)
+
     class Meta:
         managed = False
         db_table = 'salaries'
@@ -63,7 +83,10 @@ class Titles(models.Model):
     title = models.CharField(primary_key=True, max_length=50)
     from_date = models.DateField(primary_key=True)
     to_date = models.DateField(blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s %d" % (self.title, self.emp_no)
+
     class Meta:
         managed = False
         db_table = 'titles'
-
