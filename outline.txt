@@ -1,0 +1,7 @@
+Django ORM for Data Analysis
+============================
+1. Django Admin i/f (web view)
+2. Django ORM from CLI
+3. Import SQL data
+4. Enhance admin features
+5. Perform analysis on ORM objects
