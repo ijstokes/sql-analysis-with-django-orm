@@ -45,51 +45,55 @@ CREATE TABLE departments (
     dept_idx    INTEGER         NOT NULL,
     dept_no     VARCHAR(4)      NOT NULL,
     dept_name   VARCHAR(40)     NOT NULL,
-    PRIMARY KEY (dept_idx,dept_no),
-    UNIQUE  (dept_name)
+    UNIQUE  (dept_name),
+    PRIMARY KEY (dept_idx)
 );
 
 CREATE TABLE dept_manager (
-    dept_no      VARCHAR(4)      NOT NULL,
-    emp_no       INTEGER         NOT NULL,
-    from_date    DATE            NOT NULL,
-    to_date      DATE            NOT NULL,
-    FOREIGN KEY (emp_no)  REFERENCES employees (emp_no)    ON DELETE CASCADE,
-    FOREIGN KEY (dept_no) REFERENCES departments (dept_no) ON DELETE CASCADE,
-    PRIMARY KEY (emp_no,dept_no)
+    mgr_idx     INTEGER        NOT NULL,
+    dept_idx    INTEGER        NOT NULL,
+    emp_no      INTEGER        NOT NULL,
+    from_date   DATE           NOT NULL,
+    to_date     DATE           NOT NULL,
+    FOREIGN KEY (emp_no)   REFERENCES employees   (emp_no)   ON DELETE CASCADE,
+    FOREIGN KEY (dept_idx) REFERENCES departments (dept_idx) ON DELETE CASCADE,
+    PRIMARY KEY (mgr_idx)
 ); 
 
 CREATE TABLE dept_emp (
+    deptemp_idx INTEGER         NOT NULL,
     emp_no      INTEGER         NOT NULL,
-    dept_no     CHAR(4)         NOT NULL,
+    dept_idx    INTEGER        NOT NULL,
     from_date   DATE            NOT NULL,
     to_date     DATE            NOT NULL,
     FOREIGN KEY (emp_no)  REFERENCES employees   (emp_no)  ON DELETE CASCADE,
-    FOREIGN KEY (dept_no) REFERENCES departments (dept_no) ON DELETE CASCADE,
-    PRIMARY KEY (emp_no,dept_no)
+    FOREIGN KEY (dept_idx) REFERENCES departments (dept_idx) ON DELETE CASCADE,
+    PRIMARY KEY (deptemp_idx)
 );
 
 CREATE TABLE titles (
+    titles_idx  INTEGER         NOT NULL,
     emp_no      INTEGER         NOT NULL,
     title       VARCHAR(50)     NOT NULL,
     from_date   DATE            NOT NULL,
     to_date     DATE,
     FOREIGN KEY (emp_no) REFERENCES employees (emp_no) ON DELETE CASCADE,
-    PRIMARY KEY (emp_no,title, from_date)
+    PRIMARY KEY (titles_idx)
 ); 
 
 CREATE TABLE salaries (
+    salary_idx  INTEGER         NOT NULL,
     emp_no      INTEGER         NOT NULL,
     salary      INTEGER         NOT NULL,
     from_date   DATE            NOT NULL,
     to_date     DATE            NOT NULL,
     FOREIGN KEY (emp_no) REFERENCES employees (emp_no) ON DELETE CASCADE,
-    PRIMARY KEY (emp_no, from_date)
+    PRIMARY KEY (salary_idx)
 ); 
 
-.read 'load_departments.dump'
-.read 'load_employees.dump'
-.read 'load_dept_emp.dump'
-.read 'load_dept_manager.dump'
-.read 'load_titles.dump'
-.read 'load_salaries.dump'
+.read 'load_departments.dumpnew'
+.read 'load_employees.dumpnew'
+.read 'load_dept_emp.dumpnew'
+.read 'load_dept_manager.dumpnew'
+.read 'load_titles.dumpnew'
+.read 'load_salaries.dumpnew'

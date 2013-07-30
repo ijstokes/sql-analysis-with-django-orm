@@ -1,5 +1,6 @@
 # Project specific
 *.dump
+*.dumpnew
 *.sqlite3
 *.db
 *.swp

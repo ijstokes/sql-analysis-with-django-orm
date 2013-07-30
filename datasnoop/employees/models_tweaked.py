@@ -2,6 +2,7 @@
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
 # Feel free to rename the models, but don't rename db_table values or field names.
 #
 # Also note: You'll have to insert the output of 'django-admin.py sqlcustom [appname]'
@@ -11,7 +12,6 @@ from __future__ import unicode_literals
 from django.db import models
 
 class Departments(models.Model):
-    #rowid       = models.IntegerField(primary_key=True)
     dept_idx    = models.IntegerField(primary_key=True)
     dept_no     = models.CharField(unique=True, max_length=4)
     dept_name   = models.CharField(unique=True, max_length=40)
@@ -37,58 +37,49 @@ class Employees(models.Model):
         db_table = 'employees'
 
 class DeptEmp(models.Model):
-    #rowid       = models.IntegerField(primary_key=True)
-    deptemp_idx = models.IntegerField(primary_key=True)
     emp_no      = models.ForeignKey(Employees, db_column='emp_no')
-    dept_idx     = models.ForeignKey(Departments, db_column='dept_idx')
+    dept_no     = models.ForeignKey(Departments, db_column='dept_no')
     from_date   = models.DateField()
     to_date     = models.DateField()
 
     def __unicode__(self):
-        return "%s/%s (%s,%s)" % (self.dept_idx, self.emp_no, self.from_date, self.to_date)
-        #return "%s/%s, %s" % (self.dept_no.dept_name, self.emp_no.last_name, self.emp_no.first_name)
+        return "%d/%s" % (self.dept_no, self.emp_no)
 
     class Meta:
         db_table = 'dept_emp'
 
 class DeptManager(models.Model):
-    #rowid       = models.IntegerField(primary_key=True)
-    manager_idx = models.IntegerField(primary_key=True)
-    dept_idx    = models.ForeignKey(Departments, db_column='dept_idx')
+    dept_no     = models.ForeignKey(Departments, db_column='dept_no')
     emp_no      = models.ForeignKey(Employees, db_column='emp_no')
     from_date   = models.DateField()
     to_date     = models.DateField()
 
     def __unicode__(self):
-        return "%s/%s (Manager)" % (self.dept_idx, self.emp_no)
+        return "%d/%s" % (self.dept_no, self.emp_no)
 
     class Meta:
         db_table = 'dept_manager'
 
 class Salaries(models.Model):
-    #rowid       = models.IntegerField(primary_key=True)
-    salary_idx  = models.IntegerField(primary_key=True)
     emp_no      = models.ForeignKey(Employees, db_column='emp_no')
     salary      = models.IntegerField()
-    from_date   = models.DateField()
+    from_date   = models.DateField(primary_key=True)
     to_date     = models.DateField()
 
     def __unicode__(self):
-        return "%d/%s" % (self.salary, self.emp_no)
+        return "%d %d" % (self.salary, self.emp_no)
 
     class Meta:
         db_table = 'salaries'
 
 class Titles(models.Model):
-    #rowid       = models.IntegerField(primary_key=True)
-    titles_idx  = models.IntegerField(primary_key=True)
     emp_no      = models.ForeignKey(Employees, db_column='emp_no')
-    title       = models.CharField(max_length=50)
-    from_date   = models.DateField()
+    title       = models.CharField(primary_key=True, max_length=50)
+    from_date   = models.DateField(primary_key=True)
     to_date     = models.DateField(blank=True, null=True)
 
     def __unicode__(self):
-        return "%s/%s" % (self.title, self.emp_no)
+        return "%s %d" % (self.title, self.emp_no)
 
     class Meta:
         db_table = 'titles'
